@@ -13,10 +13,11 @@ android:layout_height="match_parent">
         layout="@layout/toolbar"
         ></include>
     <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
+            android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabSelectedTextColor="@color/white"
+        app:tabIndicatorColor="@color/white"
         app:tabIndicatorHeight="3sp"
         app:tabTextColor="@color/seagull"
         app:tabMode="fixed"

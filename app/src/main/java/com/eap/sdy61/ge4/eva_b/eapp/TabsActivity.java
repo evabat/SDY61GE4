@@ -36,7 +36,6 @@ public class TabsActivity extends AppCompatActivity implements
         setupViewPager(mViewPager);
 
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabs);
-        mTabLayout.setSelectedTabIndicatorColor(Color.parseColor("#ffffff"));
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
