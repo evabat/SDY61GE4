@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -13,13 +15,14 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -32,7 +35,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -51,7 +65,18 @@ public class OneFragment extends Fragment {
     FusedLocationProviderClient mFusedLocationClient;
     Location mLastLocation;
 
+    LinearLayout mPosInfo;
     Button startBtn;
+    TextView mLat;
+    TextView mLon;
+    TextView mAccuracy;
+
+
+    // Hashmap only for last marker (it will contain only one entry)
+    HashMap<String, Location> hashMapLocation = new HashMap<>();
+
+    // Hashmap only for last marker's timestamp (it will contain only one entry)
+    HashMap<String, Date> hashMapDate = new HashMap<>();
 
 
 
@@ -59,15 +84,6 @@ public class OneFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OneFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static OneFragment newInstance(String param1, String param2) {
         OneFragment fragment = new OneFragment();
         Bundle args = new Bundle();
@@ -88,6 +104,10 @@ public class OneFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_one, container, false);
 
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        mPosInfo = (LinearLayout) rootView.findViewById(R.id.posInfoLayout);
+        mLat = (TextView) rootView.findViewById(R.id.phonePosLat);
+        mLon = (TextView) rootView.findViewById(R.id.phonePosLon);
+        mAccuracy = (TextView) rootView.findViewById(R.id.posAccuracy);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume(); // needed to get the map to display immediately
@@ -105,8 +125,8 @@ public class OneFragment extends Fragment {
 
                 //Initialize Google Play Services
                 mLocationRequest = new LocationRequest();
-                mLocationRequest.setInterval(5000); // 5 seconds interval
-                mLocationRequest.setFastestInterval(1000); // one second fast interval
+                mLocationRequest.setInterval(10000); // 10 seconds interval
+                mLocationRequest.setFastestInterval(8000); // 8 seconds fast interval
                 mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
                 if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -125,6 +145,7 @@ public class OneFragment extends Fragment {
             }
         });
         mMapView.setVisibility(View.GONE);
+        mPosInfo.setVisibility(View.GONE);
 
         return rootView;
     }
@@ -137,6 +158,7 @@ public class OneFragment extends Fragment {
             public void onClick(View view) {
                 startBtn.setVisibility(View.GONE);
                 mMapView.setVisibility(View.VISIBLE);
+                mPosInfo.setVisibility(View.VISIBLE);
                 LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                 //move map camera
                 googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
@@ -149,13 +171,15 @@ public class OneFragment extends Fragment {
         // After getting the latest location. save it and re-zoom the map
         public void onLocationResult(LocationResult locationResult) {
             for (Location location : locationResult.getLocations()) {
-                Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
+//                Log.i("OneFragment", "Location: " + location.getLatitude() + " " + location.getLongitude());
                 mLastLocation = location;
-//                if (mCurrLocationMarker != null) {
-//                    mCurrLocationMarker.remove();
-//                }
                 //Place current location marker
                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                mLat.setText("Γεωγρ. μήκος: " + mLastLocation.getLatitude());
+                mLon.setText("Γεωγρ. πλάτος: " + mLastLocation.getLongitude());
+                mAccuracy.setText("Ακρίβεια θέσης: " + mLastLocation.getAccuracy());
+
+                putMarker(latLng, mLastLocation);
                 //move map camera
               googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
             }
@@ -203,16 +227,115 @@ public class OneFragment extends Fragment {
                        googleMap.setMyLocationEnabled(true);
                     }
                 } else {
-                    // permission denied, boo! Disable the
+                    // permission denied! Disable the
                     // functionality that depends on this permission.
                     Toast.makeText(getContext(), "Άρνηση παροχής αδείας.", Toast.LENGTH_LONG).show();
                 }
                 return;
             }
-            // other 'case' lines to check for other
-            // permissions this app might request
+        }
+    }
+
+    void putMarker(LatLng point, Location loc) {
+        // Get current date and time
+        Date date = new Date();
+
+        // Initialize duration and distance vars
+        long duration;
+        double distance;
+        double speed;
+
+        if (hashMapLocation.isEmpty()) {
+            distance = 0;
+        } else {
+            // Retrieve the previous data (location)
+            Location prevLoc = hashMapLocation.get("lastLocation");
+            if (prevLoc != null) {
+                // Get the distance
+                distance = loc.distanceTo(prevLoc)/1000;
+            } else {
+                distance = 0;
+            }
+
         }
 
+        if (hashMapDate.isEmpty()) {
+            duration = 0;
+        } else {
+            // Retrieve the previous data (date)
+            Date prevDate = hashMapDate.get("lastDate");
+            if (prevDate != null) {
+                // Get the duration
+                duration = (date.getTime()-prevDate.getTime())/1000;
+            } else {
+                duration = 0;
+            }
+        }
+
+        if (duration!= 0) {
+           speed = distance / duration;
+        } else {
+            speed = 0;
+        }
+
+        Log.i("OneFragment", "Speed distance date location: " + convertToDecimal(speed) + " " + distance + " " + date + " " + loc);
+
+        // Create marker
+        MarkerOptions markerOptions = new MarkerOptions();
+        // Set the marker's position
+        markerOptions.position(point);
+        // Set the marker's colour
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+        // Set the marker's title (it is defined by location name)
+        markerOptions.title(getLocationName(point.latitude, point.longitude));
+        // Set the marker's details (speed in particular)
+        markerOptions.snippet("Ταχύτητα: " + convertToDecimal(speed) + " m/s");
+
+        // Finally, add the marker
+        Marker mark = googleMap.addMarker(markerOptions);
+
+        // Clear temporary data
+        hashMapLocation.clear();
+        hashMapDate.clear();
+
+        // Add newest temporary data
+        hashMapLocation.put("lastLocation", loc);
+        hashMapDate.put("lastDate", date);
+    }
+
+    // Convert double to decimal with 4 digit points
+    public String convertToDecimal(Double dbl) {
+        DecimalFormat df = new DecimalFormat("#.####");
+        df.setRoundingMode(RoundingMode.CEILING);
+        return df.format(dbl);
+    }
+
+
+    // Get a points location name in order to have representative name for the entry
+    public String getLocationName(double lat, double lng) {
+        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+        try {
+            // Get the available addresses
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            // Check if there exist available addresses
+            if (addresses != null && addresses.size() > 0) {
+                // Get the first one
+                Address obj = addresses.get(0);
+                // In this case, we get featured name and locality
+                String area = obj.getThoroughfare();
+                // We return it as one name
+                area = area + ", " + obj.getLocality();
+                return area;
+            } else {
+                return "unknown area";
+            }
+            // Catch exception
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Inform about the error
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            return null;
+        }
     }
 
     @Override
@@ -256,8 +379,8 @@ public class OneFragment extends Fragment {
     public void requestLocationListener() {
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(4000);
-        locationRequest.setFastestInterval(1000);
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(8000);
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         }
