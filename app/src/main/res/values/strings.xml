@@ -3,5 +3,8 @@
     <string name="tabs">Tabs</string>
     <string name="storage">Storage</string>
     <string name="start_button_label">ΘΕΣΗ ΣΥΣΚΕΥΗΣ</string>
+    <string name="internet_button_label">Internet</string>
+    <string name="open_button_label">Storage (open)</string>
+    <string name="save_button_label">Storage (save)</string>
     <string name="google_maps_key">AIzaSyAEfBNgpV7AVbjjcXxH16Fp-hs8Em4vZvU</string>
 </resources>

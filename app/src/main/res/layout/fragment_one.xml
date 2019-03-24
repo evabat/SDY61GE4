@@ -43,7 +43,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="18dp"
-            android:background="@drawable/startbtn"
+            android:background="@drawable/start_map_btn"
 
             android:text="@string/start_button_label"
             android:textAlignment="textEnd"
