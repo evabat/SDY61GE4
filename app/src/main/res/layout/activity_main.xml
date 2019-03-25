@@ -10,7 +10,7 @@
         ></include>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
-        android:background="@color/wafer"
+        android:background="@color/prim"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -46,6 +46,21 @@
             android:layout_gravity="center_horizontal"
             android:textColor="@color/white"
             android:textStyle="bold" />
+        <EditText
+            android:id="@+id/fileText"
+            android:layout_gravity="start"
+            android:scrollbars = "vertical"
+            android:overScrollMode="always"
+            android:scrollbarStyle="insideInset"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:gravity="top"
+            android:background="@drawable/text_area_shape"
+            android:hint="@string/area_placeholder"
+            />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

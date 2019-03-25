@@ -6,5 +6,16 @@
     <string name="internet_button_label">Internet</string>
     <string name="open_button_label">Storage (open)</string>
     <string name="save_button_label">Storage (save)</string>
+    <string name="area_placeholder">Γράψτε το κείμενό σας...</string>
+    <string name="autofill_placeholder">Δεν μπορείτε να αποθηκεύσετε κενό κείμενο</string>
+    <string name="select_folder">Επίλέξτε φάκελο</string>
+    <string name="select_file">Επιλέξτε αρχείο</string>
+    <string name="content_loaded">Το αρχείο φορτώθηκε επιτυχώς!</string>
+    <string name="read_failed">Προέκυψε πρόβλημα κατά την ανάγνωση του αρχείου, προσπαθήστε ξανά.</string>
+    <string name="file_created">Το αρχείο δημιουργήθηκε επιτυχώς!</string>
+    <string name="file_create_error">Προέκυψε πρόβλημα κατά τη δημιουργία του αρχείου, προσπαθήστε ξανά.</string>
+    <string name="file_updated">Το αρχείο τροποποιήθηκε επιτυχώς!</string>
+    <string name="file_update_failed">Προέκυψε πρόβλημα κατά την τροποποίηση του αρχείου, προσπαθήστε ξανά.</string>
+    <string name="file_not_selected">Δεν έχει επιλεχθεί αρχείο</string>
     <string name="google_maps_key">AIzaSyAEfBNgpV7AVbjjcXxH16Fp-hs8Em4vZvU</string>
 </resources>
