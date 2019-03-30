@@ -12,7 +12,8 @@
         android:orientation="vertical"
         android:background="@color/prim"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true">
 
         <Button
             android:id="@+id/btnInternet"

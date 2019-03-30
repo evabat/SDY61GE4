@@ -252,7 +252,7 @@ public class OneFragment extends Fragment {
             Location prevLoc = hashMapLocation.get("lastLocation");
             if (prevLoc != null) {
                 // Get the distance
-                distance = loc.distanceTo(prevLoc)/1000;
+                distance = loc.distanceTo(prevLoc);
             } else {
                 distance = 0;
             }
@@ -319,15 +319,30 @@ public class OneFragment extends Fragment {
             List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
             // Check if there exist available addresses
             if (addresses != null && addresses.size() > 0) {
-                // Get the first one
-                Address obj = addresses.get(0);
-                // In this case, we get featured name and locality
-                String area = obj.getThoroughfare();
-                // We return it as one name
-                area = area + ", " + obj.getLocality();
-                return area;
+                String address = "";
+                String area = "";
+                for(int i = 0; i < addresses.size(); i++) {
+                    // Get the first not-null address as string
+                    if (addresses.get(i) != null && addresses.get(i).getThoroughfare() != null) {
+                        address = addresses.get(i).getThoroughfare();
+                    }
+                    // Get the first not-null area as string
+                    if (addresses.get(i) != null && addresses.get(i).getLocality() != null) {
+                       area = addresses.get(i).getLocality();
+                    }
+                    // If address is null in the end of iteration, set a no-name string
+                    if (i == addresses.size() - 1 && address == null) {
+                       address = "Unknown Address";
+                    }
+                    // If area is null in the end of iteration, set a no-name string
+                    if (i == addresses.size() - 1 && area == null) {
+                        area = "Unknown Area";
+                    }
+                }
+                // We get featured name and locality and we return it as one name
+                return address + ", " + area;
             } else {
-                return "unknown area";
+                return "Unknown address and area";
             }
             // Catch exception
         } catch (IOException e) {
