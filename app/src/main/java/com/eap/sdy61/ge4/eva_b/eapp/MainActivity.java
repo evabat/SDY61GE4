@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -55,6 +56,8 @@ public class MainActivity extends BaseActivity {
 
     Context mContext;
 
+    Fragment ThreeFragment;
+
     @Override
     protected void onDriveClientReady() {
         driverReady = true;
@@ -68,6 +71,8 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         mToolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(mToolbar);
+
+        ThreeFragment = new ThreeFragment();
 
         mContext = this;
 
@@ -282,5 +287,13 @@ public class MainActivity extends BaseActivity {
                 });
         // [END drive_android_rewrite_contents]
     }
+
+//    @Override
+//    public void onWindowFocusChanged(boolean hasFocus) {
+//        super.onWindowFocusChanged(hasFocus);
+//        if(ThreeFragment instanceof IOnFocusListenable) {
+//            ((IOnFocusListenable) ThreeFragment).onWindowFocusChanged(hasFocus);
+//        }
+//    }
 
 }
