@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
@@ -19,5 +18,8 @@
         parent="ThemeOverlay.AppCompat.Light">
         <item name="android:colorBackground">@color/white</item>
         <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name ="android:windowBackground"> @drawable/splash_screen_background</item>
     </style>
 </resources>
