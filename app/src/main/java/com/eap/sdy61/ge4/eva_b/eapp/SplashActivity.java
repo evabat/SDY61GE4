@@ -15,15 +15,15 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         mHandler.postDelayed(mLauncher, SPLASH_DELAY);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        setContentView(R.layout.activity_splash);
+
     }
 
     @Override
@@ -37,8 +37,9 @@ public class SplashActivity extends AppCompatActivity {
     private void launch() {
         if (!isFinishing()) {
             startActivity(new Intent(this, MainActivity.class));
-            finish();
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            finish();
+
         }
     }
 
