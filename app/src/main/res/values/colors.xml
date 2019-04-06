@@ -17,5 +17,6 @@
     <color name="dustyGray">#9C9C9C</color>
     <color name="sunGlow">#FFCC33</color>
     <color name="black">#000000</color>
+    <color name="semi_transparent_black">#C8000000</color>
 
 </resources>
