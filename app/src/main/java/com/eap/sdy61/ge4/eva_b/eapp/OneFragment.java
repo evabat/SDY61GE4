@@ -159,9 +159,11 @@ public class OneFragment extends Fragment {
                 startBtn.setVisibility(View.GONE);
                 mMapView.setVisibility(View.VISIBLE);
                 mPosInfo.setVisibility(View.VISIBLE);
-                LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                //move map camera
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                if (mLastLocation != null) {
+                    LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                    //move map camera
+                    googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+                }
             }
         });
     }

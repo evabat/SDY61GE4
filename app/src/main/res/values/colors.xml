@@ -13,5 +13,9 @@
     <color name="wispPink">#FCE8EF</color>
     <color name="wafer">#E5D0D0</color>
     <color name="prim">#F0E4F0</color>
+    <color name="gallery">#EEEEEE</color>
+    <color name="dustyGray">#9C9C9C</color>
+    <color name="sunGlow">#FFCC33</color>
+    <color name="black">#000000</color>
 
 </resources>
