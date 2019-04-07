@@ -23,6 +23,7 @@
     <string name="user_email">E-Mail</string>
     <string name="user_password">Κωδικός</string>
     <string name="register_button_label">ΕΓΓΡΑΦΗ</string>
+    <string name="start_ar_button_label">ΠΡΟΒΟΛΗ</string>
 
 
 </resources>
