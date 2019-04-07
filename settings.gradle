@@ -1,1 +1,3 @@
-include ':app'
+include ':app', ':libs:arapp'
+
+project(':libs:arapp').projectDir = new File(settingsDir, 'libs/arapp')
