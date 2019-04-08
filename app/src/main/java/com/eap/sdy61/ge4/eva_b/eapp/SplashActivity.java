@@ -18,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
         mHandler.postDelayed(mLauncher, SPLASH_DELAY);
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

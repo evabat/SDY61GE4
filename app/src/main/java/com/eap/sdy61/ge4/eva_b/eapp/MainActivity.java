@@ -58,8 +58,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onDriveClientReady() {
         driverReady = true;
-
-
     }
 
     @Override
@@ -118,13 +116,13 @@ public class MainActivity extends BaseActivity {
                 if (driverReady) {
                         if (mOpenTaskRead != null && mOpenTaskUpdate != null) {
                             if (TextUtils.isEmpty(text) || text.trim().isEmpty()) {
-                                Toast.makeText(MainActivity.this, "Δεν μπορείτε να αποθηκεύσετε αρχείο με κενό περιεχόμενο, παρκαλούμε πληκτρολογήστε κείμενο.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Δεν μπορείτε να αποθηκεύσετε αρχείο με κενό περιεχόμενο, παρακαλούμε πληκτρολογήστε κείμενο.", Toast.LENGTH_LONG).show();
                             } else {
                                 updateDriveFile(mOpenTaskUpdate, text);
                             }
                         } else {
                             if (TextUtils.isEmpty(text) || text.trim().isEmpty()) {
-                                Toast.makeText(MainActivity.this, "Δεν μπορείτε να δημιουργήσετε αρχείο με κενό περιεχόμενο, παρκαλούμε πληκτρολογήστε κείμενο.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Δεν μπορείτε να δημιουργήσετε αρχείο με κενό περιεχόμενο, παρακαλούμε πληκτρολογήστε κείμενο.", Toast.LENGTH_LONG).show();
                             } else {
                                 createFile(text);
                         }

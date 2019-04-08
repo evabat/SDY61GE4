@@ -372,7 +372,6 @@ public class OneFragment extends Fragment {
         if (mFusedLocationClient != null) {
             requestLocationListener();
         }
-
     }
 
     @Override
