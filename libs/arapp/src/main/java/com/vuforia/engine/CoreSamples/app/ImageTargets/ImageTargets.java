@@ -243,9 +243,9 @@ public class ImageTargets extends SampleActivityBase implements SampleApplicatio
     // Load specific textures from the APK, which we will later use for rendering.
     private void loadTextures()
     {
-        mTextures.add(Texture.loadTextureFromApk("TextureTeapotBrass.png",
+        mTextures.add(Texture.loadTextureFromApk("TextureRestaurant.png",
             getAssets()));
-        mTextures.add(Texture.loadTextureFromApk("TextureTeapotBlue.png",
+        mTextures.add(Texture.loadTextureFromApk("TextureMuseum.png",
             getAssets()));
         mTextures.add(Texture.loadTextureFromApk("TextureTeapotRed.png",
             getAssets()));

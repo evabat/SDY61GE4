@@ -14,8 +14,7 @@
             android:layout_centerVertical="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="18dp"
-            android:background="@drawable/start_map_btn"
-
+            android:background="@drawable/start_ar_btn"
             android:text="@string/start_ar_button_label"
             android:textAlignment="textEnd"
             android:textColor="@color/white"

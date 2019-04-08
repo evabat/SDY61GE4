@@ -72,7 +72,7 @@
     <string name="feature_cloud_reco">Cloud Reco</string>
     <string name="feature_cylinder_targets">Cylinder Targets</string>
     <string name="feature_ground_plane">Ground Plane</string>
-    <string name="feature_image_targets">Image Targets</string>
+    <string name="feature_image_targets">AR Markers</string>
     <string name="feature_model_targets">Model Targets</string>
     <string name="feature_model_targets_trained">Model Targets (trained)</string>
     <string name="feature_multi_targets">Multi Targets</string>

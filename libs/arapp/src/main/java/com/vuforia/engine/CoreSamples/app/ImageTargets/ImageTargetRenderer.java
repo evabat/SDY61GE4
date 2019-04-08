@@ -31,13 +31,13 @@ import com.vuforia.engine.SampleApplication.SampleAppRenderer;
 import com.vuforia.engine.SampleApplication.SampleAppRendererControl;
 import com.vuforia.engine.SampleApplication.SampleRendererBase;
 import com.vuforia.engine.SampleApplication.SampleApplicationSession;
+import com.vuforia.engine.SampleApplication.utils.CubeObject;
 import com.vuforia.engine.SampleApplication.utils.CubeShaders;
 import com.vuforia.engine.SampleApplication.utils.LoadingDialogHandler;
 import com.vuforia.engine.SampleApplication.utils.MeshObject;
 import com.vuforia.engine.SampleApplication.utils.SampleApplication3DModel;
 import com.vuforia.engine.SampleApplication.utils.SampleMath;
 import com.vuforia.engine.SampleApplication.utils.SampleUtils;
-import com.vuforia.engine.SampleApplication.utils.Teapot;
 import com.vuforia.engine.SampleApplication.utils.Texture;
 
 
@@ -59,7 +59,7 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
     private int texSampler2DHandle;
 
     // Object to be rendered
-    private Teapot mTeapot;
+    private CubeObject mCube;
     
     private static final float BUILDING_SCALE = 0.012f;
     private SampleApplication3DModel mBuildingsModel;
@@ -67,7 +67,7 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
     private boolean mModelIsLoaded = false;
     private boolean mIsTargetCurrentlyTracked = false;
     
-    private static final float OBJECT_SCALE_FLOAT = 0.003f;
+    private static final float OBJECT_SCALE_FLOAT = 0.06f;
     
     ImageTargetRenderer(ImageTargets activity, SampleApplicationSession session)
     {
@@ -199,7 +199,7 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
 
         if(!mModelIsLoaded)
         {
-            mTeapot = new Teapot();
+            mCube = new CubeObject();
 
             try {
                 mBuildingsModel = new SampleApplication3DModel();
@@ -237,7 +237,7 @@ public class ImageTargetRenderer extends SampleRendererBase implements SampleApp
             Matrix.translateM(modelMatrix, 0, 0, 0, OBJECT_SCALE_FLOAT);
             Matrix.scaleM(modelMatrix, 0, OBJECT_SCALE_FLOAT, OBJECT_SCALE_FLOAT, OBJECT_SCALE_FLOAT);
 
-            model = mTeapot;
+            model = mCube;
         }
 
         // Combine device pose (view matrix) with model matrix
