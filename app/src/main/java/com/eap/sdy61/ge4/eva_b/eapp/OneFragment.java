@@ -49,14 +49,6 @@ import java.util.List;
 import java.util.Locale;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OneFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link OneFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class OneFragment extends Fragment {
 
     MapView mMapView;
@@ -246,7 +238,6 @@ public class OneFragment extends Fragment {
         long duration;
         double distance;
         double speed;
-
         if (hashMapLocation.isEmpty()) {
             distance = 0;
         } else {
@@ -258,7 +249,6 @@ public class OneFragment extends Fragment {
             } else {
                 distance = 0;
             }
-
         }
 
         if (hashMapDate.isEmpty()) {

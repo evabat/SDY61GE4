@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/splashContainer"
     tools:context="com.eap.sdy61.ge4.eva_b.eapp.SplashActivity">
 
 
