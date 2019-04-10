@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -12,10 +16,11 @@ public class SplashActivity extends AppCompatActivity {
     private final Handler mHandler   = new Handler();
     private final Launcher mLauncher = new Launcher();
 
+    ImageView eapImg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.slide_up, R.anim.fade_out);
         setContentView(R.layout.activity_splash);
 
     }
@@ -23,6 +28,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        RotateAnimation anim = new RotateAnimation(0f, 358f, 80f, 50f);
+        anim.setInterpolator(new LinearInterpolator());
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.setDuration(600);
+        // Start animating the image
+        eapImg = (ImageView) findViewById(R.id.eap_img);
+        eapImg.startAnimation(anim);
         mHandler.postDelayed(mLauncher, SPLASH_DELAY);
     }
 
@@ -35,6 +47,7 @@ public class SplashActivity extends AppCompatActivity {
     private void launch() {
         if (!isFinishing()) {
             startActivity(new Intent(this, MainActivity.class));
+            eapImg.setAnimation(null);
             overridePendingTransition(R.anim.slide_up, R.anim.fade_out);
             finish();
 
