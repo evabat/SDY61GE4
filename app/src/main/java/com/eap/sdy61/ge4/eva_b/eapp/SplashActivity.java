@@ -28,7 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        RotateAnimation anim = new RotateAnimation(0f, 358f, 80f, 50f);
+        RotateAnimation anim = new RotateAnimation(0f, 358f, 100f, 50f);
         anim.setInterpolator(new LinearInterpolator());
         anim.setRepeatCount(Animation.INFINITE);
         anim.setDuration(600);
